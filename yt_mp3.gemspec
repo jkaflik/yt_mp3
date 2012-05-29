@@ -4,8 +4,8 @@ require File.expand_path('../lib/yt_mp3/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = YTMp3::AUTHORS
   gem.email         = ["kofels@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Simply download YT videos as mp3!}
+  gem.summary       = gem.description
   gem.homepage      = "http://kofel.github.com/yt_mp3/"
 
   gem.rubyforge_project = "yt_mp3"
