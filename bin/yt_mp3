@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+require 'trollop'
+
+$:.unshift(File.join(File.dirname(__FILE__), "/../lib"))
+require "yt_mp3"
+
+opts = Trollop::options do
+  version "yt_mp3 #{YTMp3::VERSION} (c) 2012 #{YTMp3::AUTHORS.join(', ')}"
+  banner <<-EOS
+  USAGE: #{$0} [url]
+EOS
+end
+
+if ARGV.empty?
+  STDERR.puts "You need to provide a URL"
+  STDERR.puts "USAGE: #{$0} [url]"
+else
+  mp3 = YTMp3::YouTubeMP3.new ARGV.first
+  puts "Converting #{mp3.url}..."
+  begin
+    mp3.convert
+  rescue Exception => e
+    STDERR.puts e
+  end
+
+  system "curl --progress-bar -L \"#{mp3.downloadable}\" > \"#{mp3.title}\".mp3"
+end
