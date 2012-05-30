@@ -1,4 +1,4 @@
-# YtMp3
+# YTMp3 [![Build Status](https://secure.travis-ci.org/Kofel/yt_mp3.png)](http://travis-ci.org/Kofel/yt_mp3)
 
 Easily download YouTube videos as Mp3 with commandline tool!
 
