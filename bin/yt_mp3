@@ -24,5 +24,5 @@ else
     STDERR.puts e
   end
 
-  system "curl --progress-bar -L \"#{mp3.downloadable}\" > \"#{mp3.title}\".mp3"
+  mp3.download
 end

@@ -35,5 +35,10 @@ module YTMp3
         end
       end      
     end
+
+    def download
+      raise DownloadError, "File not converted yet" unless @downloadable
+      system "curl --progress-bar -L \"#{@downloadable}\" > \"#{@title}\".mp3"
+    end
   end
 end

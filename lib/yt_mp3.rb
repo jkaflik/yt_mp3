@@ -12,6 +12,7 @@ module YTMp3
   end
 
   class RequestFailed < StandardError; end
+  class DownloadError < StandardError; end
 
   YOUTUBE_MP3_TIMEOUT = 90
 end
