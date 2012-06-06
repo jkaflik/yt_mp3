@@ -23,7 +23,7 @@ else
   opts = ARGV.first
 
   if opts == "--help" || opts == "-h"
-    puts opts
+    puts banner
   elsif opts == "init"
     if ARGV[1] and ARGV[2]
       options = {:synced => Array.new}
