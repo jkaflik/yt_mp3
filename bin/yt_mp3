@@ -1,28 +1,83 @@
 #!/usr/bin/env ruby
 
-require 'trollop'
-
 $:.unshift(File.join(File.dirname(__FILE__), "/../lib"))
 require "yt_mp3"
+require "json"
 
-opts = Trollop::options do
-  version "yt_mp3 #{YTMp3::VERSION} (c) 2012 #{YTMp3::AUTHORS.join(', ')}"
-  banner <<-EOS
-  USAGE: #{$0} [url]
+banner  = <<-EOS
+yt_mp3 #{YTMp3::VERSION} (c) 2012 #{YTMp3::AUTHORS.join(', ')}
+  USAGE:
+    #{$0} [url]
+  OR:
+    initalize playlist sync:
+    #{$0} init playlist PLAYLIST_ID
+    initalize user favourite sync:
+    #{$0} init favorites USERNAME
+    and then:
+    #{$0} sync
 EOS
-end
 
 if ARGV.empty?
-  STDERR.puts "You need to provide a URL"
-  STDERR.puts "USAGE: #{$0} [url]"
+  STDERR.puts banner
 else
-  mp3 = YTMp3::YouTubeMP3.new ARGV.first
-  puts "Converting #{mp3.url}..."
-  begin
-    mp3.convert
-  rescue Exception => e
-    STDERR.puts e
-  end
+  opts = ARGV.first
 
-  mp3.download
+  if opts == "--help" || opts == "-h"
+    puts banner
+  elsif opts == "init"
+    if ARGV[1] and ARGV[2]
+      options = {:synced => Array.new}
+
+      if ARGV[1] == "playlist"
+        options["playlist"] = ARGV[2]
+        puts "Playlist #{ARGV[2]} syncing initalized..."
+      elsif ARGV[1] == "favorites"
+        options["favorites"] = ARGV[2]
+        puts "User favorites \"#{ARGV[2]}\" syncing initalized..."
+      else
+        STDERR.puts banner
+        Kernel.exit
+      end
+
+      File.open(".yt_mp3.json","w") {|f| f.puts options.to_json}
+    else
+      STDERR.puts banner
+    end
+  elsif opts == "sync"
+    #begin
+      if File.exists?(".yt_mp3.json") && (options = JSON.parse(File.read(".yt_mp3.json")))
+        sync = nil
+
+        if options["playlist"]
+          sync = YTMp3::Sync.new :playlist => options["playlist"]
+        else
+          sync = YTMp3::Sync.new :favorites => options["favorites"] 
+        end
+
+        sync.synced = options["synced"] || Array.new
+
+        if (n_count = sync.new_videos.count ) > 0
+          puts "Found #{n_count} new videos. Syncing..."
+        else
+          puts "Nothing to sync. Exiting."
+          Kernel.exit
+        end
+
+        options["synced"] = sync.sync do |mp3|
+          YTMp3::download_progress mp3
+        end
+
+        File.open(".yt_mp3.json","w") {|f| f.puts options.to_json}
+
+        puts "Syncing done."
+      else
+        STDERR.puts "Syncing not initialized yet. Please type:\n#{$1} init (...)"
+      end
+    #rescue Exception => e
+    #  e.inspect
+    #  STDERR.puts "Error found: #{e}\nPlease initalize syncing by:\n#{$1} init (...)"
+    #end
+  else
+    YTMp3::download_progress YTMp3::YouTubeMP3.new(opts)
+  end
 end

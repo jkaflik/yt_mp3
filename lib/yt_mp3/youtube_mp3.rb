@@ -13,7 +13,7 @@ module YTMp3
     end
 
     def convert
-      r = HTTParty.get "http://www.youtube-mp3.org/api/pushItem/?item=#{URI.escape(@url)}&xy=yx&bf=false&r#{Time.now.to_i}"
+      r = HTTParty.get "http://www.youtube-mp3.org/api/pushItem/?item=#{URI.escape(@url)}&xy=yx&bf=false&r=#{Time.now.to_i}"
 
       raise RequestFailed, "YouTubeMP3 service responsed: #{r.body}" unless r.response.class == Net::HTTPOK
 

@@ -1,30 +1,28 @@
 # YTMp3 [![Build Status](https://secure.travis-ci.org/Kofel/yt_mp3.png)](http://travis-ci.org/Kofel/yt_mp3)
 
-Easily download YouTube videos as Mp3 with commandline tool!
+Easily download and sync in directory YouTube videos as .mp3 with commandline tool!
 
 ## Installation
     $ gem install yt_mp3
 
 ## Usage
 
+###Simple download
     $ yt_mp3 http://www.youtube.com/watch?v=DYyWVlh8NLM
+###Syncing
+Syncing user favorites:
+    $ yt_mp3 init favorites PL912D4D7B38309EAA
+    $ yt_mp3 sync
+Syncing playlist:
+    $ yt_mp3 init playlist 39D3FA44E3F75572
+    $ yt_mp3 sync
 
-## YouTube MP3 API:
-This gem was build on top of [YouTube-Mp3.org](http://youtube-mp3.org). Every MP3 file convertion are made by them. There I've described an API:
+And if playlist or favorites changes type:
+    $ yt_mp3 sync
 
-### Request a video to mp3 convert:
-GET: http://www.youtube-mp3.org/api/pushItem/?item=#{video_url}&xy=yx&bf=false&r=#{Time.now.to_i}
-RESPONSE: video_id
+## YouTube MP3 API
 
-  HTTParty.get("http://www.youtube-mp3.org/api/pushItem/?item=http%3A//www.youtube.com/watch%3Fv%3D41L3a0QUzwY%26feature%3Dg-all-u&xy=yx&bf=false&r=#{Time.now.to_i}").body
-  => "41L3a0QUzwY"
-
-### Get video info (we need it to get a hash). Repeat until status is "serving".
-GET: http://www.youtube-mp3.org/api/itemInfo/?video_id=#{video_id}&ac=www&r=#{Time.now.to_i}
-RESPONSE: info JSON fetched by response.body.match(/\Ainfo = (.*?);\z/)[1]
-
-  HTTParty.get()
-
+This gem was build on top of [YouTube-Mp3.org](http://youtube-mp3.org). Every MP3 file convertion are made by them. [There I've described an API](https://github.com/Kofel/yt_mp3/wiki/YouTube-MP3-API)
 ## Contributing
 
 1. Fork it
