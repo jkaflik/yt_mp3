@@ -29,10 +29,9 @@ module YTMp3
 
     def sync
       new_videos.each do |video|
+        @synced << video
         yield YTMp3::YouTubeMP3.new(video)
       end
-
-      @synced = @videos_playlist
     end
   end
 end

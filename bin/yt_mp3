@@ -54,7 +54,7 @@ else
           sync = YTMp3::Sync.new :favorites => options["favorites"] 
         end
 
-        sync.synced = options["synced"]
+        sync.synced = options["synced"] || Array.new
 
         if (n_count = sync.new_videos.count ) > 0
           puts "Found #{n_count} new videos. Syncing..."
@@ -67,9 +67,9 @@ else
           YTMp3::download_progress mp3
         end
 
-        puts "Syncing done."
-
         File.open(".yt_mp3.json","w") {|f| f.puts options.to_json}
+
+        puts "Syncing done."
       else
         STDERR.puts "Syncing not initialized yet. Please type:\n#{$1} init (...)"
       end
