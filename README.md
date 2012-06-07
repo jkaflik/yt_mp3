@@ -1,28 +1,31 @@
 # YTMp3 [![Build Status](https://secure.travis-ci.org/Kofel/yt_mp3.png)](http://travis-ci.org/Kofel/yt_mp3)
 
-Easily download and sync in directory YouTube videos as .mp3 with commandline tool!
+Quickly download video from YouTube to mp3. Sync the folder with playlists or favorites!
 
 ## Installation
     $ gem install yt_mp3
 
 ## Usage
 
-###Simple download
+###Just download
     $ yt_mp3 http://www.youtube.com/watch?v=DYyWVlh8NLM
 ###Syncing
-Syncing user favorites:
-    $ yt_mp3 init favorites PL912D4D7B38309EAA
+**syncing user favorites**
+    $ yt_mp3 init favorites kofels
     $ yt_mp3 sync
-Syncing playlist:
+**syncing playlist**
     $ yt_mp3 init playlist 39D3FA44E3F75572
     $ yt_mp3 sync
-
-And if playlist or favorites changes type:
+**and when something has been pushed to playlist type**
     $ yt_mp3 sync
 
 ## YouTube MP3 API
+This gem was build on top of [YouTube-Mp3.org](http://youtube-mp3.org).
 
-This gem was build on top of [YouTube-Mp3.org](http://youtube-mp3.org). Every MP3 file convertion are made by them. [There I've described an API](https://github.com/Kofel/yt_mp3/wiki/YouTube-MP3-API)
+[There I've described an API](https://github.com/Kofel/yt_mp3/wiki/YouTube-MP3-API)
+
+Please note that *yt_mp3* is not responsible for failed conversions. There are limitations ex. 15 convertions for 30 minutes.
+
 ## Contributing
 
 1. Fork it
