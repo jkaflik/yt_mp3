@@ -2,6 +2,8 @@ require "yt_mp3/version"
 require "yt_mp3/youtube_mp3"
 require "yt_mp3/sync"
 
+require "yt_mp3/badge_progress_bar"
+
 module YTMp3
   def self.uri?(string)
     uri = URI.parse(string)
@@ -13,23 +15,29 @@ module YTMp3
   end
 
   def self.download_progress(mp3)
-    puts "Processing #{mp3.url}..."
-    begin
-      mp3.convert
-    rescue Exception => e
-      STDERR.puts e
-    end
+    puts ":: #{mp3.url}\n"
+    
+    bar = BadgeProgressBar.new
+    bar.badge = "Converting"
 
     begin
-      mp3.download
-    rescue DownloadError
-      STDERR.puts "Failed to download. Video cannot be converted. Could not exists."
+      mp3.convert do |info|
+        bar.count = (info["progress"].to_f * 100).abs
+        bar.write
+      end
+
+      begin
+        mp3.download
+      rescue DownloadError => e
+        STDERR.puts "Failed to download. Video cannot be converted. Could not exists. (#{e})"
+      end
+    rescue RequestFailed => e
+      STDERR.puts e
     end
   end
 
   class RequestFailed < StandardError; end
   class DownloadError < StandardError; end
   class SyncError < StandardError; end
-
-  YOUTUBE_MP3_TIMEOUT = 90
 end
+

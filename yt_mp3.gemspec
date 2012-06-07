@@ -11,6 +11,7 @@ Gem::Specification.new do |gem|
   gem.rubyforge_project = "yt_mp3"
   gem.add_dependency "httparty"
   gem.add_dependency "youtube_it"
+  gem.add_dependency "progress_bar"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
