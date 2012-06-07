@@ -8,15 +8,22 @@ Quickly download video from YouTube to mp3. Sync the folder with playlists or fa
 ## Usage
 
 ###Just download
+
     $ yt_mp3 http://www.youtube.com/watch?v=DYyWVlh8NLM
+    
 ###Syncing
 **syncing user favorites**
+
     $ yt_mp3 init favorites kofels
     $ yt_mp3 sync
+    
 **syncing playlist**
+
     $ yt_mp3 init playlist 39D3FA44E3F75572
     $ yt_mp3 sync
+    
 **and when something has been pushed to playlist type**
+
     $ yt_mp3 sync
 
 ## YouTube MP3 API
