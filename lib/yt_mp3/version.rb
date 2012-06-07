@@ -1,4 +1,4 @@
 module YTMp3
-  VERSION = "0.0.1"
+  VERSION = "1.0"
   AUTHORS = ["Jakub Kaflik"]
 end
