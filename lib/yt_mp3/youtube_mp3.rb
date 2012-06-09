@@ -1,6 +1,6 @@
 require 'httparty'
 require 'uri'
-require 'json'
+require 'oj'
 
 module YTMp3
   class YouTubeMP3
@@ -24,7 +24,7 @@ module YTMp3
 
         raise RequestFailed, "Something went wrong (not HTTP OK)" unless r.response.class == Net::HTTPOK
 
-        info = JSON.parse(r.body.match(/\Ainfo = (.*?);\z/)[1])
+        info = Oj.load(r.body.match(/\Ainfo = (.*?);\z/)[1])
 
         if info["status"] == "serving"
           @downloadable = "http://www.youtube-mp3.org/get?video_id=#{video_id}&h=#{info['h']}&r=#{Time.now.to_i}"

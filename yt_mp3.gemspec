@@ -9,6 +9,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = "http://kofel.github.com/yt_mp3/"
 
   gem.rubyforge_project = "yt_mp3"
+  gem.add_dependency "oj"
   gem.add_dependency "httparty"
   gem.add_dependency "youtube_it"
   gem.add_dependency "progress_bar"
