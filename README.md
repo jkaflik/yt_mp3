@@ -1,3 +1,5 @@
+# Project is deprecated. More details [here](https://github.com/jkaflik/yt_mp3/issues/5).
+
 # YTMp3 [![Build Status](https://secure.travis-ci.org/Kofel/yt_mp3.png)](http://travis-ci.org/Kofel/yt_mp3)
 
 Quickly download video from YouTube to mp3. Sync the folder with playlists or favorites!
